@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --radius: 1rem;
+  --brand-primary: #111827;
+  --brand-secondary: #6ee7b7;
+  --brand-accent: #14b8a6;
+}
+
+.dark :root,
+:root.dark {
+  /* có thể tăng tương phản ở dark */
+  --brand-primary: #0b1220;
+  --brand-secondary: #34d399;
+  --brand-accent: #2dd4bf;
+}
+
+.card {
+  @apply rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900;
+}
+
+.btn {
+  @apply inline-flex items-center gap-2 rounded-xl px-3 py-2 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition;
+}
+
+.btn-primary {
+  @apply bg-neutral-900 text-white hover:bg-neutral-800 border-neutral-900;
+}
+
+.input {
+  @apply w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2 outline-none focus:ring-2 focus:ring-neutral-400;
+}
+
+.label {
+  @apply text-sm text-neutral-600 dark:text-neutral-300;
+}
+
+.brand-gradient {
+  background-image: linear-gradient(
+    90deg,
+    var(--brand-primary),
+    var(--brand-secondary)
+  );
+}
+
+.brand-chip {
+  background-image: linear-gradient(
+    135deg,
+    rgba(20, 184, 166, 0.08),
+    rgba(110, 231, 183, 0.08)
+  );
+  border: 1px solid rgba(20, 184, 166, 0.25);
+}
+
+/* --------------------------------------------
+   Global Dark Mode Enhancements
+--------------------------------------------- */
+
+/* Smooth transitions for dark/light mode */
+html,
+body,
+.card,
+.btn,
+.input {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Better base background + text contrast */
+body {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+html.dark body {
+  background-color: #0b0f19;
+  color: #f5f5f5;
+}
+
+/* Card smooth tone and subtle depth */
+.card {
+  @apply transition-colors;
+  background-color: var(--brand-card-light, #ffffff);
+}
+
+html.dark .card {
+  background-color: var(--brand-card-dark, #111827);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Input focus glow - subtle blue */
+.input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+/* Button hover and lift animation */
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Primary button refinement */
+.btn-primary {
+  @apply transition-all;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(17, 24, 39, 0.3);
+}
+
+/* Header & Sidebar glass effect */
+header,
+aside {
+  backdrop-filter: blur(12px);
+  transition:
+    background-color 0.3s ease,
+    backdrop-filter 0.3s ease;
+}
+
+header {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+html.dark header {
+  background: rgba(17, 17, 17, 0.6);
+}
+
+aside {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+html.dark aside {
+  background: rgba(20, 20, 20, 0.8);
+}
+
+/* Scrollbar theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(120, 120, 120, 0.4);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(150, 150, 150, 0.6);
+}
+
+/* Page background gradient for elegance */
+html.dark body {
+  background: linear-gradient(135deg, #0b0f19 0%, #111827 50%, #141a24 100%);
+}
+
+body:not(.dark) {
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 50%, #e5e7eb 100%);
+}
+
+/* ----------------------------
+   React Quill Custom Theme
+----------------------------- */
+.quill-editor {
+  min-height: 350px;
+  padding: 16px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Nền Glass mờ đẹp */
+.quill-editor .ql-container {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: none !important;
+  color: var(--fg);
+}
+
+/* Thanh công cụ */
+.quill-editor .ql-toolbar {
+  background: rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--card-border);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Khung soạn thảo */
+.quill-editor .ql-editor {
+  color: var(--fg);
+  padding: 20px 24px;
+  background: transparent;
+  min-height: 300px;
+  overflow-y: auto;
+}
+
+/* Placeholder */
+.quill-editor .ql-editor.ql-blank::before {
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+/* Dark / Light mode tự nhận */
+.light .quill-editor .ql-container {
+  background: rgba(0, 0, 0, 0.03);
+  color: #111;
+}
+
+.light .quill-editor .ql-toolbar {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light .quill-editor .ql-editor {
+  background: transparent;
+  color: #111;
+}
+
+/* Typo chỉnh đẹp khi viết dài */
+.quill-editor .ql-editor h1,
+.quill-editor .ql-editor h2,
+.quill-editor .ql-editor h3 {
+  font-weight: 600;
+  margin-top: 1.2em;
+}
+
+.quill-editor .ql-editor p {
+  margin-bottom: 0.8em;
+}
+
+.quill-editor .ql-editor img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin: 12px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}

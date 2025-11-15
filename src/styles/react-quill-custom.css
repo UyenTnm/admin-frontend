@@ -1,0 +1,24 @@
+/* vùng hiển thị nội dung */
+.ql-editor {
+  min-height: 300px !important;
+  padding: 16px !important;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.ql-toolbar {
+  border-radius: 7px;
+}
+
+/* container bao ngoài */
+.ql-container {
+  border-radius: 7px;
+  background-color: white;
+  min-height: 300px !important;
+}
+
+/* dark mode */
+.dark .ql-container {
+  background-color: #0a0a0a;
+  color: #e5e5e5;
+}
