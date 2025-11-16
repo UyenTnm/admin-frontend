@@ -89,7 +89,7 @@ export function AppLayout() {
 
   /* ---------- Smooth Scroll ---------- */
   useEffect(() => {
-    const lenis = new Lenis({ smoothWheel: true, smoothTouch: false });
+    const lenis = new Lenis({ smoothWheel: true });
     lenisRef.current = lenis;
     const raf = (time: number) => {
       lenis.raf(time);

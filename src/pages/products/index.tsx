@@ -5,7 +5,7 @@ import ProductList from "./ProductList";
 export default function ProductsPage() {
   return (
     <>
-      <ProductForm onSuccess={() => refetchProducts()} />
+      <ProductForm />
       <ProductList />
     </>
   );

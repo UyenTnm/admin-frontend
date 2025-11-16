@@ -207,11 +207,11 @@ export default function UserList() {
 
       {/* Confirm Dialog */}
       <ConfirmDialog
-        isOpen={confirmOpen}
-        onCancel={() => setConfirmOpen(false)}
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
         onConfirm={handleDelete}
         title="Delete User"
-        message={`Do you want to delete user "${selectedUser?.name}" ?`}
+        description={`Do you want to delete user "${selectedUser?.name}" ?`}
       />
     </PageFade>
   );

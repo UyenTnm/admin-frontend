@@ -6,5 +6,6 @@ export const BRAND = {
     logoLight: "/brand/logo-light.png",
     logoDark: "/brand/logo-dark.png",
     illoPng: "/brand/illustration.png",
+    illoWebp: "",
   },
 };

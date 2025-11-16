@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestHeaders } from "axios";
 import { auth } from "./auth";
 import toast from "react-hot-toast";
 
@@ -13,7 +13,7 @@ const instance = axios.create({
   },
 });
 
-// Chuẩn hóa payload cho FormData và dữ liệu JSON
+// Chuẩn hoá payload
 function normalizePayload(data: any) {
   if (typeof FormData !== "undefined" && data instanceof FormData) {
     const fd = new FormData();
@@ -45,6 +45,7 @@ function normalizePayload(data: any) {
       clone.isActive === 1 ||
       String(clone.isActive).toLowerCase() === "true" ||
       String(clone.isActive).toLowerCase() === "on";
+
     clone.status = on ? "ACTIVE" : "INACTIVE";
     delete clone.isActive;
   }
@@ -52,6 +53,7 @@ function normalizePayload(data: any) {
   return clone;
 }
 
+// Upload image
 export async function uploadImage(file: File) {
   const form = new FormData();
   form.append("file", file);
@@ -66,12 +68,12 @@ export async function uploadImage(file: File) {
   return data.url as string;
 }
 
-// Interceptor để tự động gắn token từ auth hoặc localStorage
+// Attach token interceptor
 instance.interceptors.request.use((config) => {
   const session = auth.get();
 
-  // nếu token là object, lấy token.token
   let token: string | null = null;
+
   if (session?.token) {
     token =
       typeof session.token === "string"
@@ -81,12 +83,15 @@ instance.interceptors.request.use((config) => {
     token = localStorage.getItem("token");
   }
 
-  if (token && typeof token === "string") {
-    config.headers = {
-      ...(config.headers || {}),
-      Authorization: `Bearer ${token}`,
-    };
-    // console.log("🔑 Token used:", token);
+  if (token) {
+    // Lấy headers hiện tại (có thể là AxiosHeaders hoặc object hoặc undefined)
+    const current = (config.headers ?? {}) as Record<string, any>;
+
+    // set header vào object tạm, sau đó ép kiểu về AxiosRequestHeaders
+    current["Authorization"] = `Bearer ${token}`;
+
+    // ép kiểu để thỏa TypeScript/Axios
+    config.headers = current as AxiosRequestHeaders;
   }
 
   return config;
@@ -99,30 +104,12 @@ instance.interceptors.response.use(
     if (error.response) {
       const { status, data } = error.response;
 
-      // 401 - Unauthorized
-      if (status === 401) {
-        toast.error("Log-in to continue.");
-        // Nếu muốn, có thể auto logout:
-        // auth.logout();
-        // window.location.href = "/login";
-      }
-
-      // 403 - Forbidden
-      if (status === 403) {
+      if (status === 401) toast.error("Log-in to continue.");
+      if (status === 403)
         toast.error("You do not have permission to perform this operation.");
-      }
+      if (status === 404) toast.error("No data found.");
+      if (status >= 500) toast.error("System error, please try again later.");
 
-      // 404 - Not Found
-      if (status === 404) {
-        toast.error("No data found.");
-      }
-
-      // 500 - Server error
-      if (status >= 500) {
-        toast.error("System error, please try again later.");
-      }
-
-      // Trả lỗi về để component còn xử lý cụ thể
       return Promise.reject(data || error);
     }
 

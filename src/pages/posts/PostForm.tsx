@@ -124,7 +124,7 @@ export default function PostForm() {
   // Chỉ setContent 1 lần khi edit bài cũ
   useEffect(() => {
     if (editor && form.content && isEdit && !loading) {
-      editor.commands.setContent(form.content, false);
+      editor.commands.setContent(form.content);
     }
   }, [editor, form.content, isEdit, loading]);
 

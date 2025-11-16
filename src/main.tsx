@@ -134,7 +134,7 @@ const router = createBrowserRouter(
   ],
   {
     // Opt-in cho React Router v7 Transition Mode (hiệu năng tốt hơn)
-    future: { v7_startTransition: true },
+    future: {},
   }
 );
 

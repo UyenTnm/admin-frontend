@@ -1,5 +1,4 @@
 import { Eye, EyeOff } from "lucide-react";
-import { P } from "node_modules/framer-motion/dist/types.d-DsEeKk6G";
 import React, { useState } from "react";
 
 interface PasswordInputProps
